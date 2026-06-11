@@ -1,0 +1,130 @@
+[gd_scene format=3 uid="uid://bvptcpllcdddf"]
+
+[ext_resource type="Script" uid="uid://bp1alcpjqrgb2" path="res://Assests/scripts/player_controller.gd" id="1_3sr3p"]
+[ext_resource type="Texture2D" uid="uid://b01sclu8mfs43" path="res://Assests/Sprites/player.png" id="1_g31ij"]
+[ext_resource type="Script" uid="uid://b1goufq33kqv0" path="res://Assests/scripts/player_animation.gd" id="2_0g0s7"]
+
+[sub_resource type="Animation" id="Animation_3sr3p"]
+resource_name = "Idle"
+length = 2.0
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerAnimation/Sprite2D:region_rect")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.25, 0.5, 0.75, 1, 1.25, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Rect2(16, 0, 16, 16), Rect2(32, 0, 16, 16), Rect2(48, 0, 16, 16), Rect2(64, 0, 16, 16), Rect2(80, 0, 16, 16), Rect2(96, 0, 16, 16), Rect2(96, 0, 16, 16)]
+}
+
+[sub_resource type="Animation" id="Animation_8splq"]
+resource_name = "Movement"
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerAnimation/Sprite2D:region_rect")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 0.9928573),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Rect2(0, 16, 16, 16), Rect2(16, 16, 16, 16), Rect2(32, 16, 16, 16), Rect2(48, 16, 16, 16), Rect2(0, 16, 16, 16)]
+}
+
+[sub_resource type="Animation" id="Animation_0g0s7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerAnimation/Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(16, 0, 16, 16)]
+}
+
+[sub_resource type="Animation" id="Animation_oqkfw"]
+resource_name = "fall"
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerAnimation/Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(0, 48, 16, 16)]
+}
+
+[sub_resource type="Animation" id="Animation_7gi2c"]
+resource_name = "jump"
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerAnimation/Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(0, 32, 16, 16)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8splq"]
+_data = {
+&"Idle": SubResource("Animation_3sr3p"),
+&"Movement": SubResource("Animation_8splq"),
+&"RESET": SubResource("Animation_0g0s7"),
+&"fall": SubResource("Animation_oqkfw"),
+&"jump": SubResource("Animation_7gi2c")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3sr3p"]
+radius = 5.0
+height = 16.0
+
+[node name="Player" type="CharacterBody2D" unique_id=954250618]
+script = ExtResource("1_3sr3p")
+speed = 5.49
+jump_power = 6.0
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=734766061]
+zoom = Vector2(6, 6)
+
+[node name="PlayerAnimation" type="Node2D" parent="." unique_id=513971211 node_paths=PackedStringArray("player_controller", "animation_player", "sprite")]
+script = ExtResource("2_0g0s7")
+player_controller = NodePath("..")
+animation_player = NodePath("AnimationPlayer")
+sprite = NodePath("Sprite2D")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PlayerAnimation" unique_id=388123286]
+root_node = NodePath("../..")
+libraries/ = SubResource("AnimationLibrary_8splq")
+autoplay = &"Idle"
+
+[node name="Sprite2D" type="Sprite2D" parent="PlayerAnimation" unique_id=996346052]
+position = Vector2(1, -9)
+texture = ExtResource("1_g31ij")
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1273947435]
+visible = false
+position = Vector2(1, -8)
+shape = SubResource("CapsuleShape2D_3sr3p")

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://ueeir1j7vb7i"
+path="res://.godot/imported/Super jump.mp3-96f9638bb257b630a91d34a50f14a064.mp3str"
+
+[deps]
+
+source_file="res://Assests/Sprites/Super jump.mp3"
+dest_files=["res://.godot/imported/Super jump.mp3-96f9638bb257b630a91d34a50f14a064.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
