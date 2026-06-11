@@ -101,7 +101,6 @@ height = 16.0
 
 [node name="Player" type="CharacterBody2D" unique_id=954250618]
 script = ExtResource("1_3sr3p")
-speed = 5.49
 jump_power = 6.0
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=734766061]
